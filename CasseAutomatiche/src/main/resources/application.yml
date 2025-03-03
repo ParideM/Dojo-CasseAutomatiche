@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/casse_automatiche
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver  # Può essere omesso se usi la dipendenza MySQL
+    hikari:
+      maximum-pool-size: 10  # Opzionale: Se vuoi configurare la dimensione del pool di connessioni
+  jpa:
+    hibernate:
+      ddl-auto: update  # Opzioni: none, update, create, create-drop
+    show-sql: true  # Per mostrare le query SQL nel log
+    properties:
+      hibernate:
+        format-sql: true  # Per formattare le query SQL nel log
