@@ -31,6 +31,8 @@ public class StockService {
     public List<Prodotto> calcolaStockGiornata() {
 
     	List<Object[]> results = scontrinoDettaglioRepository.getTotaleQuantitaPerProdotto();
+    	
+    	//metto i dati sugli articoli venduti in una mappa, per ottimizzare poi accopiamento con la lista di tutti gli articoli
     	Map<String, Prodotto> venduti = results.stream()
     	    .map(result -> new Prodotto((String) result[0], ((Number) result[1]).longValue()))
     	    .collect(Collectors.toMap(Prodotto::getBarcode, venduto -> venduto));
@@ -40,6 +42,7 @@ public class StockService {
     		
     		Prodotto venduto = venduti.get(old.getBarcode().getCodice());
     		
+    		//aggiorno quantita residua
     		return new Prodotto(old.getBarcode().getCodice(), old.getQuantita() - (venduto == null? 0 : venduto.getStock()));
    		
     	}).toList();

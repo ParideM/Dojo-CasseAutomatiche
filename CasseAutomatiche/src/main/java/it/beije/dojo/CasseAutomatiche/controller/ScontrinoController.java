@@ -45,6 +45,9 @@ public class ScontrinoController {
             @PathVariable Long scontrinoId,
             @RequestBody BarcodeDTO barcodeDTO) {
         try {
+            if (barcodeDTO == null) {
+                return ResponseEntity.badRequest().body("barcode assente.");
+            }
             ScontrinoDettaglioDTO savedDettaglio = scontrinoService.addArticolo(scontrinoId, barcodeDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedDettaglio);
         } catch (Exception e) {

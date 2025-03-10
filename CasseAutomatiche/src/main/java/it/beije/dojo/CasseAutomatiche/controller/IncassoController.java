@@ -43,6 +43,9 @@ public class IncassoController {
     public ResponseEntity<?> getVenditeEIncassoPerData(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
         try {
+            if (data == null) {
+                return ResponseEntity.badRequest().body("La data non deve essere nulla.");
+            }
             List<Prodotto> vendite = incassoService.getVenditeEIncassoPerData(data);
             return ResponseEntity.ok(vendite);
         } catch (Exception e) {
@@ -56,6 +59,9 @@ public class IncassoController {
     public ResponseEntity<?> getIncassoPerReparto(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
         try {
+            if (data == null) {
+                return ResponseEntity.badRequest().body("La data non deve essere nulla.");
+            }
             List<Prodotto> vendite = incassoService.getIncassoPerReparto(data);
             return ResponseEntity.ok(vendite);
         } catch (Exception e) {
@@ -69,6 +75,9 @@ public class IncassoController {
     public ResponseEntity<?> getIncassoPerRepartoDatoAnno(
             @RequestParam String anno) {
         try {
+            if (anno == null) {
+                return ResponseEntity.badRequest().body("anno non deve essere nullo.");
+            }
             List<Prodotto> vendite = incassoService.getIncassoPerRepartoDatoAnno(anno);
             return ResponseEntity.ok(vendite);
         } catch (Exception e) {
