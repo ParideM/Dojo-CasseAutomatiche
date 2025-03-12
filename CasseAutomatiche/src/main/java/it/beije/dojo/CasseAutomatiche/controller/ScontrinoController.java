@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -67,5 +68,20 @@ public class ScontrinoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Errore nell'aggiornamento dello scontrino", "message", e.getMessage()));
         }
+    }
+
+    @DeleteMapping("/{scontrinoId}/articolo/{barcode}")
+    public ResponseEntity<?> cancellaArticoloDaScontrino(
+            @PathVariable Long scontrinoId,         
+            @PathVariable String barcode) {
+    	 try {
+	        scontrinoService.rimuoviArticolo(scontrinoId, barcode);	        
+	        return ResponseEntity.ok("Articolo rimosso con successo");
+
+         } catch (Exception e) {
+             log.error("Errore nell'aggiornamento dello scontrino ID: {} con i dati: {}", scontrinoId, barcode, e);
+             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                     .body(Map.of("error", "Errore nell'aggiornamento dello scontrino", "message", e.getMessage()));
+         }
     }
 }

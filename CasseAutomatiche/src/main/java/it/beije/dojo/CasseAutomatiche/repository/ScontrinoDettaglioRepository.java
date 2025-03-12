@@ -5,6 +5,7 @@ import it.beije.dojo.CasseAutomatiche.dto.ScontrinoDettaglioDTO;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -57,6 +58,8 @@ public interface ScontrinoDettaglioRepository extends JpaRepository<ScontrinoDet
     		+ "GROUP BY r.nome", 
     nativeQuery = true)
     List<Object[]> getIncassoPerRepartoDatoAnno(@Param("anno") String anno);
+
+	Optional<ScontrinoDettaglioDTO> findByScontrinoIdAndBarcodeId(Long scontrinoId, Long barcodeId);
     
     
 }

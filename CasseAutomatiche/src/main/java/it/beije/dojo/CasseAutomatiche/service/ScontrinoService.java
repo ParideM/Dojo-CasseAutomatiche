@@ -84,4 +84,14 @@ public class ScontrinoService {
 
         return scontrinoDettaglioRepository.save(nuovoDettaglio);
     }
+
+    public boolean rimuoviArticolo(Long scontrinoId, String barcode) {
+    	BarcodeDTO barcodeDto = barcodeRepository.findByCodice(barcode)	.orElseThrow(() -> new RuntimeException("Barcode non trovato"));
+        ScontrinoDettaglioDTO dettaglio = scontrinoDettaglioRepository
+            .findByScontrinoIdAndBarcodeId(scontrinoId, barcodeDto.getId())
+            .orElseThrow(() -> new RuntimeException("Articolo non trovato nello scontrino"));
+
+        scontrinoDettaglioRepository.delete(dettaglio);
+        return true;
+    }
 }
